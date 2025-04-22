@@ -6,10 +6,6 @@ export function openModal(modal) {
 export function closeModal(modal) {
   modal.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", closeModalEsc);
-  const form = modal.querySelector(".popup__form");
-  if (form) {
-    form.reset();
-  }
 }
 
 function closeModalEsc(evt) {

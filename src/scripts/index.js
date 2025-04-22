@@ -1,6 +1,6 @@
 import "../pages/index.css";
 import initialCards from "./cards.js";
-import { createCard, deleteCard } from "./card.js";
+import { createCard, deleteCard, handleLike } from "./card.js";
 import { openModal, closeModal, setModalEventListeners } from "./modal.js";
 
 const popupEdit = document.querySelector(".popup_type_edit");
@@ -28,63 +28,61 @@ const popupCaptionElement = popupImage.querySelector(".popup__caption");
 popups.forEach((popup) => setModalEventListeners(popup));
 
 editButton.addEventListener("click", () => {
-  openModal(popupEdit);
+	nameInput.value = profileTitle.textContent;
+	descriptionInput.value = profileDescription.textContent;
+	openModal(popupEdit);
+	
 });
 
 addButton.addEventListener("click", () => {
-  openModal(popupNewCard);
+	openModal(popupNewCard);
 });
 
 closeButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const popup = button.closest(".popup");
-    const popupForm = 
-    closeModal(popup);
-  });
+	button.addEventListener("click", () => {
+		const popup = button.closest(".popup");
+		closeModal(popup);
+	});
 });
 
 formEditProfile.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  profileDescription.textContent = descriptionInput.value;
-  profileTitle.textContent = nameInput.value;
-  closeModal(formEditProfile.closest(".popup"));
-  formEditProfile.reset();
+	evt.preventDefault();
+	profileDescription.textContent = descriptionInput.value;
+	profileTitle.textContent = nameInput.value;
+	formEditProfile.reset();
 });
 
 formNewCard.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const cardData = {
-    name: newCardNameInput.value,
-    link: newCardLinkInput.value,
-  };
-  const newCard = createCard(
-    cardData,
-    handleLike,
-    handleImageClick,
-    deleteCard
-  );
-  placesList.prepend(newCard);
-  closeModal(formNewCard.closest(".popup"));
-  formNewCard.reset();
+	evt.preventDefault();
+	const cardData = {
+		name: newCardNameInput.value,
+		link: newCardLinkInput.value,
+	};
+	const newCard = createCard(
+		cardData,
+		handleLike,
+		handleImageClick,
+		deleteCard
+	);
+	placesList.prepend(newCard);
+	formNewCard.reset();
 });
 
-function handleLike(evt) {
-  evt.target.classList.toggle("card__like-button_is-active");
-}
+
 
 function handleImageClick(data) {
-  popupImageElement.src = data.link;
-  popupImageElement.alt = data.name;
-  popupCaptionElement.textContent = data.name;
-  openModal(popupImage);
+	popupImageElement.src = data.link;
+	popupImageElement.alt = data.name;
+	popupCaptionElement.textContent = data.name;
+	openModal(popupImage);
 }
 
 initialCards.forEach((cardData) => {
-  const cardElement = createCard(
-    cardData,
-    handleLike,
-    handleImageClick,
-    deleteCard
-  );
-  placesList.append(cardElement);
+	const cardElement = createCard(
+		cardData,
+		handleLike,
+		handleImageClick,
+		deleteCard
+	);
+	placesList.append(cardElement);
 });

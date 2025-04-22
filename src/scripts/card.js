@@ -16,7 +16,9 @@ export function createCard(data, handleLike, handleImageClick, handleDelete) {
   
     return cardElement;
   }
-  
+  export function handleLike(evt) {
+	evt.target.classList.toggle("card__like-button_is-active");
+ }
   export const deleteCard = (event) => {
     event.target.closest('.card').remove();
   };
