@@ -50,6 +50,7 @@ formEditProfile.addEventListener("submit", (evt) => {
 	profileDescription.textContent = descriptionInput.value;
 	profileTitle.textContent = nameInput.value;
 	formEditProfile.reset();
+	closeModal(popupEdit)
 });
 
 formNewCard.addEventListener("submit", (evt) => {
@@ -66,6 +67,7 @@ formNewCard.addEventListener("submit", (evt) => {
 	);
 	placesList.prepend(newCard);
 	formNewCard.reset();
+	closeModal(popupNewCard)
 });
 
 
