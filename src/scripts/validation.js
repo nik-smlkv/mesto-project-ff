@@ -1,20 +1,27 @@
+// validation.js
 function showInputError(formElement, inputElement, errorMessage, settings) {
-	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-	inputElement.classList.add(settings.inputErrorClass);
-	errorElement.textContent = errorMessage;
-	errorElement.classList.add(settings.errorClass);
+	var errorElement = formElement.querySelector(`.place-${inputElement.name}-error`);
+	if (errorElement) {
+		inputElement.classList.add(settings.inputErrorClass);
+		errorElement.textContent = errorMessage;
+		errorElement.classList.add(settings.errorClass);
+	}
 }
 
 function hideInputError(formElement, inputElement, settings) {
-	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-	inputElement.classList.remove(settings.inputErrorClass);
-	errorElement.classList.remove(settings.errorClass);
-	errorElement.textContent = '';
+	var errorElement = formElement.querySelector(`.place-${inputElement.name}-error`);
+	if (errorElement) {
+		inputElement.classList.remove(settings.inputErrorClass);
+		errorElement.classList.remove(settings.errorClass);
+		errorElement.textContent = '';
+	}
 }
 
+
 function checkInputValidity(formElement, inputElement, settings) {
-	if (!inputElement.validity.valid) {
-		const errorMessage = inputElement.dataset.errorMessage || inputElement.validationMessage;
+	const namePattern = /^[a-zA-Zа-яА-ЯёЁ\s-]+$/;
+	if (!inputElement.validity.valid || (inputElement.name === 'name' || inputElement.name === 'place-name') && !namePattern.test(inputElement.value)) {
+		const errorMessage = inputElement.dataset.errorMessage || inputElement.validationMessage || "Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы";
 		showInputError(formElement, inputElement, errorMessage, settings);
 	} else {
 		hideInputError(formElement, inputElement, settings);

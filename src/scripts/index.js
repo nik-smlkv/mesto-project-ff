@@ -72,27 +72,62 @@ closeButtons.forEach((button) => {
 
 formEditProfile.addEventListener("submit", (evt) => {
 	evt.preventDefault();
-	profileDescription.textContent = descriptionInput.value;
-	profileTitle.textContent = nameInput.value;
-	formEditProfile.reset();
-	closeModal(popupEdit)
+	const submitButton = evt.submitter;
+	submitButton.dataset.originalText = submitButton.textContent;
+	renderLoading(true, submitButton);
+
+	updateUserInfo(nameInput.value, descriptionInput.value)
+		.then(userData => {
+			profileTitle.textContent = userData.name;
+			profileDescription.textContent = userData.about;
+			closeModal(popupEdit);
+		})
+		.catch(err => {
+			console.error(err);
+		})
+		.finally(() => {
+			renderLoading(false, submitButton);
+		});
 });
+
 
 formNewCard.addEventListener("submit", (evt) => {
 	evt.preventDefault();
-	const cardData = {
-		name: newCardNameInput.value,
-		link: newCardLinkInput.value,
-	};
-	const newCard = createCard(
-		cardData,
-		handleLike,
-		handleImageClick,
-		deleteCard
-	);
-	placesList.prepend(newCard);
-	formNewCard.reset();
-	closeModal(popupNewCard)
+	const submitButton = evt.submitter;
+	submitButton.dataset.originalText = submitButton.textContent;
+	renderLoading(true, submitButton);
+
+	addCard(newCardNameInput.value, newCardLinkInput.value)
+		.then(card => {
+			const newCard = createCard(card, handleLike, handleImageClick, deleteCard);
+			placesList.prepend(newCard);
+			closeModal(popupNewCard);
+		})
+		.catch(err => {
+			console.error(err);
+		})
+		.finally(() => {
+			renderLoading(false, submitButton);
+		});
+});
+
+formUpdateAvatar.addEventListener("submit", (evt) => {
+	evt.preventDefault();
+	const submitButton = evt.submitter;
+	submitButton.dataset.originalText = submitButton.textContent;
+	renderLoading(true, submitButton);
+
+	updateAvatar(avatarInput.value)
+		.then(userData => {
+			profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
+			closeModal(popupUpdateAvatar);
+		})
+		.catch(err => {
+			console.error(err);
+		})
+		.finally(() => {
+			renderLoading(false, submitButton);
+		});
 });
 
 
