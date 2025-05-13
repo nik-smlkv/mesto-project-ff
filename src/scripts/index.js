@@ -38,6 +38,10 @@ const editForm = document.querySelector('.popup_type_edit .popup__form');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 
+const formUpdateAvatar = document.forms["edit-avatar"];
+const popupUpdateAvatar = document.querySelector('.popup_type_edit_avatar');
+const updateAvatarInput = formUpdateAvatar.elements["url"];
+
 const validationConfig = {
 	formSelector: '.popup__form',
 	inputSelector: '.popup__input',
@@ -52,6 +56,14 @@ enableValidation(validationConfig);
 
 popups.forEach((popup) => setModalEventListeners(popup));
 
+closeButtons.forEach((button) => {
+	button.addEventListener("click", () => {
+		const popup = button.closest(".popup");
+		closeModal(popup);
+	});
+});
+
+
 editButton.addEventListener("click", () => {
 	nameInput.value = profileTitle.textContent;
 	descriptionInput.value = profileDescription.textContent;
@@ -61,13 +73,6 @@ editButton.addEventListener("click", () => {
 
 addButton.addEventListener("click", () => {
 	openModal(popupNewCard);
-});
-
-closeButtons.forEach((button) => {
-	button.addEventListener("click", () => {
-		const popup = button.closest(".popup");
-		closeModal(popup);
-	});
 });
 
 formEditProfile.addEventListener("submit", (evt) => {
@@ -89,7 +94,6 @@ formEditProfile.addEventListener("submit", (evt) => {
 			renderLoading(false, submitButton);
 		});
 });
-
 
 formNewCard.addEventListener("submit", (evt) => {
 	evt.preventDefault();
@@ -156,7 +160,9 @@ profileEditButton.addEventListener('click', () => {
 profileAddButton.addEventListener('click', () => {
 	clearValidation(newPlaceForm, validationConfig);
 });
+profileAvatar.addEventListener('click',() =>{
 
+});
 
 function renderUserInfo({ name, about, avatar }) {
 	profileName.textContent = name;
