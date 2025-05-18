@@ -9,16 +9,20 @@ export function createCard(data, handleLike, handleImageClick, handleDelete) {
 	cardImage.src = data.link;
 	cardImage.alt = data.name;
 	cardTitle.textContent = data.name;
-
-	likeButton.addEventListener("click", handleLike);
+/* 
+	likeButton.addEventListener("click", handleLike); */
 	cardImage.addEventListener("click", () => handleImageClick(data));
 	deleteButton.addEventListener("click", handleDelete);
 
 	return cardElement;
 }
-export function handleLike(evt) {
-	evt.target.classList.toggle("card__like-button_is-active");
-}
+
 export const deleteCard = (event) => {
 	event.target.closest('.card').remove();
 };
+export function handleImageClick(data) {
+	popupImageElement.src = data.link;
+	popupImageElement.alt = data.name;
+	popupCaptionElement.textContent = data.name;
+	openModal(popupImage);
+  }
