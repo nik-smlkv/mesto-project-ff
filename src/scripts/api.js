@@ -85,3 +85,4 @@ export function dislikeCard(cardId) {
 		headers: config.headers
 	});
 }
+
