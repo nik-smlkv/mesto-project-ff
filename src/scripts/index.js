@@ -183,7 +183,7 @@ function renderUserInfo({ name, about, avatar, _id }) {
 function renderCards(cards) {
 	cards.forEach((card) => {
 		const likedCard = card.likes.map(like => like._id);
-		let renderCard = createCard(card.name, card.link, card.likes.length, card._id, likedCard.includes(userId));
+		const renderCard = createCard(card.name, card.link, card.likes.length, card._id, likedCard.includes(userId));
 		placesList.append(renderCard);
 	});
 }
