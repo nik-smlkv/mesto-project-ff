@@ -18,7 +18,7 @@ function hideInputError(formElement, inputElement, settings) {
 
 function checkInputValidity(formElement, inputElement, settings) {
 	if (!inputElement.validity.valid) {
-		const errorMessage = inputElement.dataset.errorMessage || inputElement.validationMessage;
+		const errorMessage = inputElement.validity.patternMismatch ? inputElement.dataset.errorMessage : inputElement.validationMessage;
 		showInputError(formElement, inputElement, errorMessage, settings);
 	} else {
 		hideInputError(formElement, inputElement, settings);
